@@ -1,0 +1,48 @@
+accession,modality,role,context,planned_contrast_or_use,planned_raw_type,locked
+GSE209609,bulk,training,R1 oral mucosal repair,skin wound vs palate wound response,Affymetrix GPL29499 CEL,false
+GSE97615,bulk,training,R1 oral mucosal repair,skin vs oral D3/D6 relative to D0,NCBI raw counts,false
+GSE111523,bulk,training,R1 oral mucosal repair,skin wound response vs gingival healing,confirm in P1,false
+GSE168760,bulk,training,R2 scar-free adult skin,donor-site wound vs fractional-laser response,raw microarray,false
+GSE28914,bulk,reference,R2 injury reference,donor-site wound D3/D7 vs intact skin,Affymetrix GPL570 CEL,false
+GSE50425,bulk,reference,R2 injury reference,donor-site wound D14/D21 vs intact skin,microarray CEL/raw,false
+GSE124161,bulk,training,F1 adult scar formation,placebo wound W1-W8 vs uninjured D0,submitter raw counts,false
+GSE152781,bulk,training,F1 adult scar formation,placebo/untreated W4/W8 vs uninjured D0,raw counts,false
+GSE178411,bulk,training+specificity,F2 hypertrophic scar / acute wound,HTS vs normal and early/late wound,NCBI raw counts,false
+GSE181540,bulk,training,F2 hypertrophic scar,HTS vs normal skin,raw source confirm P1,false
+GSE162904,bulk,sensitivity,F2 hypertrophic scar,stretched scar vs matched dermis,Affymetrix GPL570 CEL,false
+GSE158766,bulk,sensitivity,F2 hypertrophic scar,sorted HTS vs normal fibroblasts,raw microarray,false
+GSE218007,bulk,training,F3 keloid,keloid vs normal skin,raw microarray,false
+GSE158395,bulk,training,F3 keloid,keloid vs normal skin,raw counts,false
+GSE212954,bulk,training,F3 keloid,keloid centre+margin vs paired normal skin,raw counts,false
+GSE92566,bulk,training,F3 keloid,keloid vs paired non-lesional skin,Affymetrix GPL570 CEL,false
+GSE151464,bulk,excluded+sensitivity,F3 keloid,positive-control failure; flipped sensitivity,NCBI raw counts,false
+GSE113619,bulk,locked_validation,LT locked test,keloid-prone vs healthy day42-day0,submitter raw counts,true
+GSE130955,bulk,validation,E1 systemic sclerosis,SSc vs control skin,NCBI raw counts,false
+GSE58095,bulk,validation,E1 systemic sclerosis,SSc vs control skin,Illumina HT-12 raw/non-normalised,false
+GSE181549,bulk,validation,E1 systemic sclerosis,SSc first visit vs control,Agilent feature extraction,false
+GSE95065,bulk,validation,E1 systemic sclerosis,SSc vs control skin,raw microarray,false
+GSE224093,bulk,validation,E2 endometrial fibrosis,intrauterine adhesion vs control,NCBI raw counts,false
+GSE165321,bulk,validation,E2 endometrial fibrosis,intrauterine adhesion vs control,raw counts,false
+GSE145470,bulk,exploratory,I1 intervention,hair-follicle graft vs untreated scar,Affymetrix GPL570 CEL,false
+GSE174661,bulk,specificity,C1 specificity,venous ulcer and acute wound vs intact skin,NCBI raw counts,false
+GSE21648,bulk,sensitivity,V1 in vitro,skin vs oral fibroblasts,raw microarray,false
+GSE22029,bulk,sensitivity,V1 in vitro,dermal vs gingival fibroblasts,raw microarray,false
+GSE7890,bulk,sensitivity,V1 in vitro,keloid vs normal fibroblasts,Affymetrix GPL570 CEL,false
+GSE44270,bulk,sensitivity,V1 in vitro,keloid vs normal fibroblasts,GPL6244 CEL,false
+GSE145725,bulk,sensitivity,V1 in vitro,keloid/scar vs normal fibroblasts,GPL16043 CEL,false
+GSE136906,bulk,sensitivity,V1 in vitro,keloid/scar vs normal fibroblasts,GPL16686 CEL,false
+E-MTAB-7407,single_cell,core,R3 fetal skin,fetal skin donors,Cell Ranger matrices + metadata,false
+E-MTAB-8142,single_cell,core,R3 adult skin,healthy adult comparator counts + metadata,false
+GSE164241,single_cell,reference,R1 oral mucosa,healthy gingiva/buccal reference,MTX triplets,false
+GSE241132,single_cell,core,wound time course,paired intact/D1/D7/D30,per-sample matrices + metadata,false
+GSE163973,single_cell,core,keloid,dermal keloid vs normal scar,per-sample matrices + metadata,false
+GSE181316,single_cell,core,keloid,keloid vs normal scar (+ healthy),MTX triplets,false
+GSE191067,single_cell,core,keloid,keloid/normal/peri-keloid/healthy,UMI table + metadata,false
+GSE156326,single_cell,supportive,hypertrophic scar,HTS vs skin; remove mouse,MTX triplets,false
+GSE138669,single_cell,core,systemic sclerosis,SSc vs healthy forearm skin,10x h5,false
+GSE312129,single_cell,replication+spatial,systemic sclerosis,SSc nuclei and Visium localization,filtered multiome h5 + spatial,false
+GSE215968,single_cell,core,Asherman,endometrium adhesion vs control,per-sample Cell Ranger archives,false
+GSE265972,single_cell,specificity,venous ulcer,venous ulcer vs skin,processed archive + author cell types,false
+GSE241124,spatial,validation,wound spatial,Visium localization only,Visium h5/MTX + images,false
+GSE181297,spatial,validation,keloid spatial,Visium localization only,Visium h5/MTX + images,false
+GSE311899,intervention,exploratory,Asherman intervention,CD133+ cell therapy,raw data source confirm,false

@@ -1,0 +1,16 @@
+project: Human Repair-Outcome Axis
+plan: Human Repair-Outcome Axis — Work Plan v2
+fixed_seed: 2026
+frozen_plan: 00_config/frozen_work_plan_v2.txt
+plan_sha256_file: 00_config/frozen_work_plan_v2.sha256
+registry: 00_config/dataset_registry.csv
+locked_test: GSE113619
+locked_test_policy: Download and checksum in P1; do not inspect contents until P9 after axis gene set is frozen and hashed.
+phases:
+  P0: Setup and preregistration
+  P1: Raw-file download
+thresholds:
+  H1_mean_spearman_rho: '> 0'
+  H1_permutation_p: '< 0.05'
+  H1_leave_one_context_out_rho: '>= 0.80'
+  P1_core_files: '100% present and checksummed'

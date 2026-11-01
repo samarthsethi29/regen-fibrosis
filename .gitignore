@@ -1,0 +1,17 @@
+# Raw source data is tracked by manifest and checksums, not committed to Git
+01_raw/
+*.CEL
+*.fastq
+*.fastq.gz
+*.bam
+*.cram
+*.h5
+*.h5ad
+*.rds
+*.RData
+*.tar
+*.tar.gz
+*.zip
+*.parquet
+.ipynb_checkpoints/
+.DS_Store

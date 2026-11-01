@@ -1,0 +1,1698 @@
+ 
+
+Human Repair-Outcome Axis — Work Plan v2 
+
+Sep 27, 2026 · @Naveen Kumar 
+
+This plan rebuilds, from raw files, a human Repair-Outcome Axis — the transcriptional programme that separates scar-free from scarring repair — and tests it with five pre-specified hypotheses. It integrates 31 bulk datasets (about 1,360 samples), 12 single-cell datasets (about 180 samples, about 900,000 cells) and a degree-controlled graph-learning benchmark, all analysed in R over about 22 weeks, for a journal with an impact factor of about 3. 
+
+Introduction 
+
+Human tissues can heal with or without a scar, yet no study has asked what the scar-free cases have in common at the molecular level. This study answers that across every public human repair model with suitable data. 
+
+Background 
+
+Scarring is common and costly. Each year in the developed world about 100 million people acquire scars after 55 million elective and 25 million trauma operations, and an estimated 11 million live with keloids (Bayat et al., BMJ 2003). 
+
+Scarring is one end of a wider fibrosis spectrum. Nearly 45% of deaths in the developed world are attributed to chronic fibroproliferative disease (Wynn, J Pathol 2008). 
+
+Some human repair is scar-free. Fetal skin regenerates until about 22 weeks of gestation, with less inflammatory infiltration, distinct fibroblast behaviour and a different TGF-β isoform balance (Textbook on Scar Management, NCBI Bookshelf). 
+
+Oral mucosa heals faster and with less scarring than skin. Wound-activated transcriptional networks are already present in unwounded oral mucosa, driven partly by SOX2 and PITX1 in keratinocytes (Iglesias-Bartolome et al., Sci Transl Med 2018). 
+
+Adult skin can repair without scar after fractional laser injury, giving a third, within-person scar-free model (GSE168760). 
+
+Pathological scars have distinct cell states. Keloids carry an expanded mesenchymal fibroblast subpopulation that is also increased in scleroderma (Deng et al., Nat Commun 2021). 
+
+Research gap 
+
+One context at a time. Published transcriptomic studies compare keloid with skin, or oral mucosa with skin, but never test whether one programme separates outcome across contexts. 
+
+Three signals are mixed. Differences between biopsies reflect injury magnitude, which cells the biopsy contains, and cell-intrinsic state. Existing signatures do not separate them. 
+
+A collagen-centred view. Fibrosis signatures are dominated by ECM genes, but our pre-analysis suggests the shared outcome difference lies in inflammatory amplitude and a non-ECM residual. 
+
+Graph learning has not been applied to repair outcome. Graph convolutional networks integrating omics with interaction networks found 165 new cancer genes (Schulte-Sasse et al., Nat Mach Intell 2021), but such models reward highly connected genes and are easily evaluated with leakage. 
+
+Rationale 
+
+Contrasting scarring with scar-free repair in several independent human models cancels context-specific noise, so what is shared is more likely causal for outcome. Single-cell references then separate composition from cell state, and graph learning extends the evidence to genes that bulk data measure poorly. A sealed cohort of keloid-prone individuals tests whether the axis predicts outcome in people it has never seen. 
+
+Novelty 
+
+The study compares repair outcomes, not disease versus normal tissue, and separates three sources of signal that earlier fibrosis signatures mix together. 
+
+Outcome contrast across three human regeneration models. Scar-free repair (oral mucosa, fractional-laser adult skin, fetal skin) is contrasted with scarring repair (adult scars, hypertrophic scars, keloids) in the same analysis. 
+
+Injury, composition and cell state are separated. Acute-wound reference datasets remove injury magnitude. Single-cell deconvolution removes differences in which cells a biopsy contains. What remains is cell-intrinsic. 
+
+A shared axis that is not collagen-centred. The pre-analysis found that immune amplitude and a non-ECM residual are shared, while ECM genes add nothing. v2 tests this formally. 
+
+Graph learning that cannot cheat. Networks are built without expression or text-mining evidence, so they are independent of the labels. Models are tested on held-out genes in held-out contexts, stratified by node degree, against rewired-network nulls. 
+
+A locked, pre-registered test. The keloid-prone cohort GSE113619 has never been analysed. It is scored once, with a one-sided test fixed before reprocessing. 
+
+Significance 
+
+Clinical. Genes on the axis that are not injury genes are candidate targets for scar prevention. A sample-level axis score could flag keloid-prone healing early. Transfer to SSc and Asherman syndrome would show relevance beyond skin. 
+
+Methodological. The injury–composition–cell-state decomposition and the degree-controlled graph benchmark are reusable for any multi-context disease meta-analysis. 
+
+Resource. Harmonised, raw-file-derived objects for 43 human repair datasets will be released with code. 
+
+Objectives 
+
+Primary objective 
+
+Define a cross-context human Repair-Outcome Axis that separates scarring from scar-free repair, and test whether it predicts keloid-prone repair in a sealed cohort. 
+
+Primary discovery endpoint: concordance of regenerative and fibrotic contrasts (H1). 
+
+Primary validation endpoint: the pre-registered interaction test in GSE113619 (H5). 
+
+Secondary objectives 
+
+Decompose the axis into injury magnitude, tissue composition and cell-intrinsic parts (H2). 
+
+Localise axis genes to cell types and states: keloid vs normal scar in three datasets, fetal vs adult skin, SSc, Asherman and the wound time course (H3). 
+
+Benchmark graph learning against non-graph and propagation baselines under degree control, and prioritise network-supported candidate genes (H4). 
+
+Transfer and specificity: test the axis in SSc and Asherman cohorts, and check that chronic and acute wounds score no higher than their injury level. 
+
+Mechanism: infer upstream transcription-factor activity and ligand–receptor changes along the axis. 
+
+Exploratory objectives 
+
+Timing: trace programmes across oral (6 h to day 7), laser (day 3 to 21) and wound (day 1 to 30) time courses. 
+
+Interventions: test whether EGCG (two trials) or CD133+ cell therapy for Asherman syndrome (GSE311899) moves tissue along the axis. 
+
+Spatial: map the axis onto Visium sections of wounds, keloids and SSc skin. 
+
+In vitro persistence: test which axis parts persist in cultured fibroblasts (six datasets). 
+
+Hypotheses and success criteria 
+
+Four aims, five hypotheses. Each has one primary test and a success threshold fixed now, before any raw file is reprocessed. Sign convention everywhere: positive = towards scarring. 
+
+Aim 
+
+Hypothesis 
+
+Primary test 
+
+Success criterion 
+
+1 Define 
+
+H1 One transcriptional axis separates scarring from scar-free repair across contexts 
+
+Mean Spearman ρ between the regenerative composite and each fibrotic contrast; pairing-aware sample-label permutation (1,000) 
+
+ρ > 0 with p < 0.05; leave-one-context-out ρ ≥ 0.80 
+
+2 Decompose 
+
+H2 The axis is not explained by injury magnitude or tissue composition 
+
+Concordance after removing the top 10% acute-injury genes, and after adjusting every contrast for deconvolved cell fractions 
+
+≥ 50% of concordance retained, below the random-removal null 
+
+2 Decompose 
+
+H3 Axis genes act through specific cell states 
+
+Donor-pseudobulk contrasts per cell type: keloid vs normal scar (3 datasets), SSc, Asherman, wound time course, fetal vs adult 
+
+At least one cell type significant in ≥ 2 keloid datasets and shifted the opposite way in fetal vs adult 
+
+3 Learn 
+
+H4 A graph model predicts unseen genes in unseen contexts better than non-graph baselines, beyond node degree 
+
+Leave-one-context-out × gene-fold Spearman ρ and top-decile AUPRC, stratified by degree; rewired-network null 
+
+Beats the best baseline in ≥ 60% of held-out contexts and beats 95% of rewired networks 
+
+4 Validate 
+
+H5 The axis predicts keloid-prone repair and transfers to other fibroses 
+
+Locked GSE113619: interaction (keloid-prone vs healthy, day 42 − day 0) on the sample-level axis score, one-sided; SSc (4 cohorts); Asherman (bulk + single-cell) 
+
+Locked test p < 0.05; SSc pooled AUC > 0.65 
+
+Specificity is checked too: venous ulcers and acute wounds should score no higher than their injury level predicts. 
+
+Preliminary results from the pre-analysis 
+
+The pre-analysis (Phases 0–3c and 1b.0) showed the study is feasible and fixed the design decisions below. v2 does not reuse its numbers: every value is re-derived from raw files. 
+
+Finding 
+
+Evidence 
+
+Decision in v2 
+
+Enough usable human data 
+
+32 bulk datasets passed screening (1,358 samples) 
+
+Keep all 32; register them before download 
+
+One dataset fails its positive control 
+
+GSE151464: fibrosis markers inverted (likely label swap) 
+
+Pre-specified exclusion; flipped version as sensitivity 
+
+Two fibrotic datasets carry no signal 
+
+GSE158766, GSE162904: π₁ < 0.10 (3 vs 3) 
+
+Sensitivity only 
+
+Processed GEO values are unreliable 
+
+GSE28914 mixed scales; GSE124161 NCBI counts broken; GSE209609 custom probe IDs 
+
+Always start from raw files (see Starting from raw files) 
+
+A shared axis exists 
+
+Context-level concordance ρ = 0.31, permutation p = 0.002; leave-one-context-out ρ ≥ 0.92; SSc transfer ρ = 0.42–0.69 
+
+H1 becomes a confirmatory test with fixed thresholds 
+
+Injury adjustment removed real biology 
+
+Known genes 0/15 supported; R–F correlation turned negative 
+
+Raw axis primary; injury-adjusted axis is a sensitivity analysis 
+
+Shared core = immune amplitude, not ECM 
+
+Removing 3,157 immune and injury genes keeps 77% of concordance; removing ECM genes changes nothing 
+
+Explain the non-immune residual (H2, H3) 
+
+Epidermis and fatty-acid programmes may be composition 
+
+Acute-injury z = −1.54 and −1.75 (near cutoff); no SSc transfer 
+
+Single-cell deconvolution is mandatory (Phase 6) 
+
+Single-cell data are sufficient 
+
+12 datasets usable; keloid vs normal scar in 3 datasets; fetal 7 vs same-lab adult 5 donors 
+
+Single-cell arm is core, not optional 
+
+Oral vs skin cannot be compared per cell type 
+
+No study profiles both tissues 
+
+Oral atlas used only as a deconvolution reference 
+
+Workstation limits 
+
+32 GB RAM, 8 cores, 76 GB free disk 
+
+Per-sample processing; no FASTQ re-alignment 
+
+Study design 
+
+A multi-context meta-analysis of public human data, with a sealed test cohort and pre-specified roles for every dataset. Nothing about a dataset’s role can change after P0. 
+
+Definitions 
+
+Context: one repair setting with a defined outcome. Regenerative: R1 oral mucosa, R2 fractional-laser adult skin, R3 fetal skin. Fibrotic: F1 adult scar formation, F2 hypertrophic scar, F3 keloid. 
+
+Contrast: one within-dataset comparison, always signed so that positive = towards scarring. For regenerative contexts it is the scarring response minus the scar-free response (an interaction, or a difference of paired responses). 
+
+Axis: the gene-level, context-weighted meta-analytic effect across training contrasts. 
+
+Injury response: wound vs intact skin in reference arms that are neither scar-free nor pathological. 
+
+Role 
+
+Purpose 
+
+Datasets 
+
+Training 
+
+Build the axis 
+
+R1, R2, R3, F1, F2, F3 (12 bulk contrasts + fetal single-cell) 
+
+Reference 
+
+Injury response used for adjustment and decomposition 
+
+GSE28914, GSE50425, GSE241132 
+
+Locked test 
+
+One pre-registered test of prediction 
+
+GSE113619 
+
+External validation 
+
+Transfer to other fibroses 
+
+E1 SSc (4 bulk + 2 single-cell), E2 Asherman (2 bulk + 1 single-cell) 
+
+Specificity control 
+
+Chronic and acute wounds should not look fibrotic beyond injury 
+
+GSE174661, GSE178411 wounds, GSE265972 
+
+Intervention 
+
+Exploratory shift along the axis 
+
+GSE124161, GSE152781, GSE145470, GSE311899 
+
+Sensitivity 
+
+Robustness only; never used for claims 
+
+GSE162904, GSE158766, flipped GSE151464, six in vitro fibroblast sets 
+
+Dataset search and eligibility 
+
+Search: GEO and ArrayExpress queried for wound healing, scar, keloid, hypertrophic scar, oral mucosal wound, fetal skin, fractional laser, systemic sclerosis skin, intrauterine adhesion and Asherman syndrome, for bulk and single-cell data. Hits are logged in a PRISMA-style flow (Figure S1). 
+
+Inclusion 
+
+Exclusion 
+
+Human tissue collected in vivo 
+
+Non-human samples (removed from mixed series, e.g. GSE156326) 
+
+Defined outcome groups (scar-free, scarring, injury, fibrosis, control) 
+
+Cell lines and organoids (in vitro fibroblasts kept only as sensitivity) 
+
+≥ 3 samples per group (paired designs ≥ 2 subjects) 
+
+Positive-control failure in P2 (e.g. GSE151464) 
+
+Genome-wide data with raw files or raw counts available 
+
+Duplicate samples across series (de-duplicated by GSM) 
+
+Sample metadata sufficient to assign group and subject 
+
+Spatial-only data for contrasts (kept for localisation) 
+
+Blinding and leakage rules 
+
+GSE113619 is downloaded and checksummed in P1 but not opened until P9. The axis gene set is frozen and its hash recorded first. 
+
+A dataset that serves as an injury reference is never adjusted against itself (leave-dataset-out references). 
+
+Graph-learning labels are recomputed for every held-out context; node features never use contrast results. 
+
+Workflow 
+
+Twelve phases run in five streams over about 22 weeks. Bulk and single-cell processing run in parallel, and every phase ends at a gate with a pre-specified fallback (see Risks). 
+
+ 
+
+work plan roadmap · 12 phases over 22 weeks, 9 decision gates 
+
+The bulk axis (P4) and the single-cell cell states (P5) both feed composition decomposition (P6). Graph learning (P8) starts only after the network gate, and the locked test (P9) is opened once, after the model is frozen. 
+
+Bulk datasets 
+
+The 32 registered bulk datasets cover 11 contexts. Twelve training contrasts build the axis; the rest are held out for reference, validation or sensitivity. Sample numbers are from the pre-analysis and will be re-counted after raw-file QC. 
+
+Context 
+
+Role 
+
+Dataset 
+
+Contrast (positive = scarring) 
+
+Data type (raw file) 
+
+Samples (case / control) 
+
+R1 Oral mucosal repair 
+
+Training 
+
+GSE209609 
+
+(skin wound − skin 0 h) − (palate wound − palate 0 h); 6 h, D1, D3, D7 
+
+Affymetrix custom array GPL29499 (CEL) 
+
+96 
+
+R1 Oral mucosal repair 
+
+Training 
+
+GSE97615 
+
+(skin D3/D6 − D0) − (oral D3/D6 − D0) 
+
+RNA-seq (NCBI raw counts) 
+
+24 
+
+R1 Oral mucosal repair 
+
+Training 
+
+GSE111523 
+
+Skin wound response (GSE28914) − gingival healing response 
+
+Confirmed in P1 
+
+19 / 17 
+
+R2 Scar-free adult skin 
+
+Training 
+
+GSE168760 
+
+Donor-site wound response − fractional-laser response, D3–D21 
+
+Microarray (raw files; platform confirmed in P1) 
+
+56 / 19 (series: 140) 
+
+R2 reference arms 
+
+Reference 
+
+GSE28914 
+
+Donor-site wound D3/D7 vs intact skin 
+
+Affymetrix GPL570 (CEL) 
+
+11 / 8 
+
+R2 reference arms 
+
+Reference 
+
+GSE50425 
+
+Donor-site wound D14/D21 vs intact skin 
+
+Microarray (CEL or raw files) 
+
+8 / 4 
+
+F1 Adult scar formation 
+
+Training 
+
+GSE124161 
+
+Placebo wound W1–W8 vs uninjured D0 
+
+RNA-seq (submitter raw counts) 
+
+21 / 3 
+
+F1 Adult scar formation 
+
+Training 
+
+GSE152781 
+
+Placebo or untreated W4/W8 vs uninjured D0 
+
+RNA-seq (raw counts) 
+
+24 / 24 
+
+F2 Hypertrophic scar 
+
+Training 
+
+GSE178411 
+
+Hypertrophic scar vs normal skin 
+
+RNA-seq (NCBI raw counts) 
+
+28 / 24 (series: 102) 
+
+F2 Hypertrophic scar 
+
+Training 
+
+GSE181540 
+
+Hypertrophic scar vs normal skin 
+
+Confirmed in P1 
+
+3 / 3 
+
+F2 Hypertrophic scar 
+
+Sensitivity 
+
+GSE162904 
+
+Stretched scar vs matched dermis 
+
+Affymetrix GPL570 (CEL) 
+
+3 / 3 
+
+F2 Hypertrophic scar 
+
+Sensitivity 
+
+GSE158766 
+
+Sorted HTS vs normal fibroblasts (CD90+CD39+) 
+
+Microarray (raw files) 
+
+3 / 3 
+
+F3 Keloid 
+
+Training 
+
+GSE218007 
+
+Keloid vs normal skin 
+
+Microarray (raw files) 
+
+23 / 5 
+
+F3 Keloid 
+
+Training 
+
+GSE158395 
+
+Keloid vs normal skin 
+
+RNA-seq (raw counts) 
+
+4 / 6 
+
+F3 Keloid 
+
+Training 
+
+GSE212954 
+
+Keloid centre + margin vs normal skin (paired) 
+
+RNA-seq (raw counts) 
+
+7 / 4 
+
+F3 Keloid 
+
+Training 
+
+GSE92566 
+
+Keloid vs non-lesional skin (paired) 
+
+Affymetrix GPL570 (CEL) 
+
+3 / 3 
+
+F3 Keloid 
+
+Excluded 
+
+GSE151464 
+
+Fails positive control; flipped version as sensitivity 
+
+RNA-seq (NCBI raw counts) 
+
+3 / 3 
+
+LT Locked test 
+
+Validation 
+
+GSE113619 
+
+(keloid-prone D42 − D0) − (healthy D42 − D0) 
+
+RNA-seq (submitter raw counts) 
+
+26 libraries, 14 subjects 
+
+E1 Systemic sclerosis 
+
+Validation 
+
+GSE130955 
+
+SSc vs control skin 
+
+RNA-seq (NCBI raw counts) 
+
+47 / 33 
+
+E1 Systemic sclerosis 
+
+Validation 
+
+GSE58095 
+
+SSc vs control skin 
+
+Illumina HT-12 GPL10558 (non-normalised) 
+
+64 / 37 
+
+E1 Systemic sclerosis 
+
+Validation 
+
+GSE181549 
+
+SSc (first visit) vs control skin 
+
+Agilent GPL13497 (feature-extraction files) 
+
+113 / 44 (series: 339) 
+
+E1 Systemic sclerosis 
+
+Validation 
+
+GSE95065 
+
+SSc vs control skin 
+
+Microarray (raw files) 
+
+17 / 15 
+
+E2 Endometrial fibrosis 
+
+Validation 
+
+GSE224093 
+
+Intrauterine adhesion vs control 
+
+RNA-seq (NCBI raw counts) 
+
+6 / 6 
+
+E2 Endometrial fibrosis 
+
+Validation 
+
+GSE165321 
+
+Intrauterine adhesion vs control 
+
+RNA-seq (raw counts) 
+
+3 / 3 
+
+I1 Interventions 
+
+Exploratory 
+
+GSE124161, GSE152781 
+
+EGCG vs placebo, same subject and week 
+
+RNA-seq (raw counts) 
+
+21 / 21; 24 / 24 
+
+I1 Interventions 
+
+Exploratory 
+
+GSE145470 
+
+Hair-follicle graft vs untreated scar (descriptive) 
+
+Affymetrix GPL570 (CEL) 
+
+6 / 2 
+
+C1 Specificity 
+
+Control 
+
+GSE174661 
+
+Venous ulcer and acute wound D1/D7 vs intact skin 
+
+RNA-seq (NCBI raw counts) 
+
+5 / 5 and 10 / 5 
+
+C1 Specificity 
+
+Control 
+
+GSE178411 
+
+Early and late wound vs normal skin 
+
+RNA-seq (NCBI raw counts) 
+
+45 / 24 
+
+V1 In vitro 
+
+Sensitivity 
+
+GSE21648, GSE22029 
+
+Skin vs oral fibroblasts; dermal vs gingival fibroblasts 
+
+Microarray (raw files) 
+
+4 / 4; 8 / 8 
+
+V1 In vitro 
+
+Sensitivity 
+
+GSE7890, GSE44270 
+
+Keloid vs normal fibroblasts 
+
+Affymetrix GPL570; GPL6244 (CEL) 
+
+10 / 9; 9 / 3 
+
+V1 In vitro 
+
+Sensitivity 
+
+GSE145725, GSE136906 
+
+Keloid or scar vs normal fibroblasts 
+
+Affymetrix GPL16043; GPL16686 (CEL) 
+
+9 / 10; 6 / 6 
+
+Single-cell datasets 
+
+Twelve datasets (about 180 samples) survive the inventory. Keloid vs normal scar is replicated in three independent datasets, and the fetal comparison uses an adult comparator from the same lab. 
+
+Contrast 
+
+Dataset 
+
+Tissue 
+
+Donors (case vs control) 
+
+Raw file per sample 
+
+Role 
+
+Note 
+
+R3 fetal vs adult skin 
+
+E-MTAB-7407 
+
+Fetal skin, 4–17 weeks 
+
+7 fetal 
+
+Cell Ranger matrix archive (tar.gz) 
+
+Core 
+
+17 skin libraries, CD45+ / CD45− sorted 
+
+R3 fetal vs adult skin 
+
+E-MTAB-8142 
+
+Adult breast skin 
+
+5 healthy adults 
+
+Dense count table + author cell metadata 
+
+Core 
+
+Same lab as E-MTAB-7407; psoriasis and eczema libraries excluded 
+
+R1 oral mucosa reference 
+
+GSE164241 
+
+Gingiva, buccal mucosa 
+
+21 healthy 
+
+mtx triplets 
+
+Reference 
+
+Deconvolution of oral bulk only 
+
+Wound D1, D7, D30 vs intact 
+
+GSE241132 
+
+Skin 
+
+3, paired 
+
+Per-sample zip + author cell metadata 
+
+Core 
+
+Separates injury response from outcome 
+
+Keloid vs normal scar 
+
+GSE163973 
+
+Dermis 
+
+3 vs 3 
+
+Per-sample matrix tar.gz + author cell types 
+
+Core 
+
+Dermal cells only 
+
+Keloid vs normal scar 
+
+GSE181316 
+
+Skin 
+
+3 vs 3 (+1 healthy) 
+
+Unfiltered mtx triplets 
+
+Core 
+
+keloid_3L and 3R = one donor; cell calling needed 
+
+Keloid vs normal scar and healthy skin 
+
+GSE191067 
+
+Skin 
+
+3 vs 3 vs 3 (+3 peri-keloid) 
+
+Dense UMI table (all samples) 
+
+Core 
+
+Cells assigned to samples by barcode prefix 
+
+Hypertrophic scar vs skin 
+
+GSE156326 
+
+Skin 
+
+3 vs 3 
+
+mtx triplets 
+
+Supportive 
+
+Chemistry confounded with condition; mouse samples removed 
+
+SSc vs healthy 
+
+GSE138669 
+
+Forearm skin 
+
+12 vs 10 
+
+Unfiltered 10x h5 
+
+Core 
+
+Cell calling needed; chemistry v1/v2 as covariate 
+
+SSc vs healthy (nuclei) 
+
+GSE312129 
+
+Skin 
+
+10 vs 4 
+
+Filtered multiome h5 (gene expression only) 
+
+Replication 
+
+Early, untreated diffuse SSc 
+
+Asherman vs control 
+
+GSE215968 
+
+Endometrium 
+
+9 vs 6 
+
+Per-sample Cell Ranger tar.gz 
+
+Core 
+
+Patients have separate stroma and epithelium biopsies 
+
+Venous ulcer vs skin 
+
+GSE265972 
+
+Skin 
+
+4 vs 5 
+
+Processed archive + author cell types 
+
+Control 
+
+Mirrors the bulk venous-ulcer control 
+
+Spatial localisation 
+
+GSE241124, GSE181297, GSE312129 
+
+Wound, keloid, SSc skin 
+
+16, 4, 10 sections 
+
+Visium h5 / mtx + images 
+
+Validation 
+
+Localisation only, no contrasts 
+
+Dropped after inspection: GSE274709 (no count matrices), GSE307504 (single 7 GB object, no normal skin), GSE195657 (nuclei, 2 donors), E-MTAB-11343 and E-MTAB-13071 (reads only). 
+
+Reference resources 
+
+All prior knowledge is downloaded once in P1, versioned in the manifest and never updated mid-study. 
+
+Resource 
+
+Source 
+
+Used for 
+
+Phase 
+
+Gene identifiers 
+
+org.Hs.eg.db (Bioconductor release matching R 4.5), frozen snapshot 
+
+Entrez, Ensembl and symbol mapping for every dataset 
+
+P2, P5 
+
+Gene Ontology Biological Process 
+
+GO.db / org.Hs.eg.db 
+
+Programme tests and GSEA of the axis 
+
+P4 
+
+MSigDB Hallmark sets 
+
+msigdbr 
+
+Secondary enrichment, comparability with published fibrosis signatures 
+
+P4 
+
+Cell-type marker sets 
+
+Curated from author annotations of the 12 single-cell datasets 
+
+Cell typing; programme tests in bulk 
+
+P4, P5 
+
+Protein interactions 
+
+STRING v12, human, experiments + curated-database channels, score ≥ 0.7 
+
+Graph 1 for networks and graph learning 
+
+P7, P8 
+
+Healthy-skin co-expression 
+
+Metacells from healthy reference donors (E-MTAB-8142, healthy GSE138669, GSE191067) 
+
+Graph 2; expression features for graph learning 
+
+P7, P8 
+
+Transcription-factor regulons 
+
+CollecTRI via decoupleR 
+
+TF activity along the axis and per cell type; TF flag feature 
+
+P8, P10 
+
+Ligand–receptor pairs 
+
+LIANA consensus resource (OmniPath) 
+
+Cell communication, keloid vs normal scar and fetal vs adult; ligand and receptor flags 
+
+P8, P10 
+
+Single-cell reference profiles 
+
+Our processed skin, oral and endometrium references 
+
+Deconvolution; cell-type expression features 
+
+P6, P8 
+
+Starting from raw files 
+
+Every dataset is rebuilt from the rawest file that GEO or ArrayExpress holds. Series-matrix values are never used, because the pre-analysis found them mixed-scale, re-annotated or broken in several datasets. 
+
+Data type 
+
+File downloaded 
+
+Processing 
+
+Affymetrix 3′ arrays (e.g. GPL570) 
+
+CEL 
+
+RMA (affy); probe sets collapsed to Entrez genes by highest mean 
+
+Affymetrix Gene / Clariom ST arrays 
+
+CEL 
+
+RMA at transcript-cluster level (oligo); mapped to Entrez 
+
+Illumina BeadChip 
+
+Non-normalised probe profiles with detection P 
+
+limma neqc; probes detected (P < 0.05) in ≥ 3 samples 
+
+Agilent one-colour 
+
+Feature-extraction text files 
+
+limma read.maimages, normexp background, quantile normalisation 
+
+Bulk RNA-seq 
+
+NCBI GEO uniform raw counts (GRCh38); submitter raw counts when NCBI counts are missing or fail QC 
+
+edgeR filterByExpr, TMM, limma-voom 
+
+Single-cell 
+
+Per-sample Cell Ranger matrices (unfiltered where available) 
+
+emptyDrops cell calling, then QC (Phase 5) 
+
+FASTQ re-alignment is not needed: NCBI uniform counts already give one GRCh38 pipeline for most RNA-seq sets. All genes are mapped to one frozen org.Hs.eg.db symbol table. Each file is logged with URL, size, MD5 and download date in a manifest. 
+
+Known traps, handled by rule in Phase 2: 
+
+GSE28914: rebuild from CEL (processed values are on mixed scales). 
+
+GSE209609: custom ENSG_at probe IDs; map through Ensembl, not the platform table. 
+
+GSE124161: NCBI counts are broken (median 4 reads per library); use the submitter read-count file. 
+
+GSE113619: NCBI counts missing; submitter file has Entrez IDs in an unnamed column; sum technical replicates; libraries are shallow (0.12–0.68 M reads), so score at sample level only. 
+
+GSE152781: take treatment from the EGCG/placebo field; the untreated day-0 biopsy is the uninjured baseline. 
+
+GSE58095: group by the disease field, not by autoantibody. 
+
+Phase-by-phase plan 
+
+Each phase is one R script run in RStudio. It writes its tables (xlsx), figures (PDF + 300-dpi TIFF) and a log, and ends with a printed gate decision. 
+
+P0 Set-up and pre-registration (week 1) 
+
+New project folder, renv lockfile, fixed seed 2026. 
+
+config.yaml: dataset registry, contrast definitions, thresholds and gates from this plan. 
+
+Freeze this plan as a timestamped release (GitHub tag or OSF) before any download. GSE113619 stays sealed. 
+
+Gate: registry validates against GEO/ArrayExpress (all accessions resolve). 
+
+P1 Raw-file download (weeks 1–2) 
+
+Bulk: raw files by the rules above; single-cell: per-sample matrices and author metadata only (about 10 GB). 
+
+Manifest with URL, size, MD5, date; resumable downloads. 
+
+Gate: 100% of core files present and checksummed; any missing file triggers the fallback source (NCBI or submitter counts). 
+
+P2 Bulk preprocessing and QC (weeks 2–4) 
+
+Platform-specific normalisation (table above); one gene-symbol space. 
+
+Sample QC: RLE/NUSE for Affymetrix, inter-array correlation (outlier if z < −3), PCA. 
+
+Sex check (XIST vs RPS4Y1, DDX3Y, KDM5D) against metadata to catch label swaps. 
+
+Positive controls: injury markers (KRT16, KRT6A, S100A8, MMP1) up in wounds; fibrosis markers (COL1A1, COL3A1, POSTN, COMP) up in HTS and keloid. 
+
+Freeze one object per dataset (expression, counts, curated sample sheet, QC flags). 
+
+Gate: ≥ 90% of samples pass; positive controls in the expected direction in ≥ 80% of fibrotic datasets. Failures follow pre-specified rules. 
+
+P3 Within-dataset contrasts (week 5) 
+
+limma-voom with TMM (counts) or limma-trend (arrays); duplicateCorrelation for repeated subjects; interaction models for R1, R2 and the locked test. 
+
+Standardised effect d = coefficient / √s² (posterior), with its standard error; π₁ per contrast; per-timepoint contrasts kept for trajectories. 
+
+Gate: ≥ 12,000 genes measured in ≥ 70% of training contrasts. 
+
+P4 Repair-Outcome Axis (weeks 6–7) 
+
+Regenerative contrasts are signed so that positive = scarring response minus scar-free response. 
+
+Two-stage random-effects meta-analysis per gene: within context, then across contexts (REML with Hartung–Knapp; DerSimonian–Laird as sensitivity). 
+
+Concordance of regenerative and fibrotic contrasts with a pairing-aware sample-label permutation (1,000); leave-one-context-out stability. 
+
+Programme decomposition: camera tests of 22 GO programmes and 12 cell-type marker sets; GO:BP GSEA; concordance after removing immune, injury, ECM and epidermal genes vs random removal. 
+
+Injury-adjusted axis as pre-specified sensitivity. 
+
+Outputs: Figures 2–3; axis table (gene, estimate, SE, FDR, heterogeneity, sign consistency). 
+
+Gate (H1): see Aims. 
+
+P5 Single-cell processing (weeks 3–9, in parallel) 
+
+Import per sample; emptyDrops for unfiltered matrices; per-sample QC by median absolute deviation (UMIs, genes, % mitochondrial); scDblFinder doublets. 
+
+Clustering per dataset after Harmony by sample; cell typing into 14 lineages by marker-module scores, checked against author labels (GSE241132, GSE163973, GSE265972, E-MTAB-8142). 
+
+Donor × cell-type pseudobulk (≥ 20 cells); limma-voom contrasts with donor blocking and chemistry covariates. 
+
+Axis score per cell type; fetal vs adult fibroblasts, keratinocytes and myeloid cells. 
+
+Outputs: Figure 4. 
+
+Gate (H3): ≥ 80% agreement with author labels, then H3 as in Aims. 
+
+P6 Composition decomposition (weeks 10–11) 
+
+Reference profiles: adult skin (E-MTAB-8142, healthy GSE138669, GSE191067, intact GSE241132), oral mucosa (GSE164241), endometrium (GSE215968 controls). 
+
+Deconvolve every bulk sample (InstaPrism, a fast BayesPrism; NNLS on marker genes as fallback). Validate on simulated pseudobulk (Pearson r ≥ 0.8 per major lineage). 
+
+Refit contrasts with the main cell fractions as covariates to get the composition-adjusted axis. 
+
+Split each gene’s effect into composition, injury and residual parts. 
+
+Gate (H2): see Aims. Decides whether the epidermis and fatty-acid programmes are reported as biology or as composition. 
+
+P7 Networks and null models (weeks 11–12) 
+
+STRING v12, experiments and curated-database channels only (combined score ≥ 0.7); co-expression and text-mining channels excluded to avoid circularity. 
+
+Healthy-skin co-expression network from single-cell metacells (reference donors not used in any contrast), top 10 neighbours per gene. 
+
+100 degree-preserving rewired copies of each network. 
+
+Gate: axis genes closer in the network than in rewired copies (proximity z > 2). If not, the graph model is still run but reported as a negative benchmark. 
+
+P8 Graph learning benchmark (weeks 12–15) 
+
+Design in the next section. 
+
+Outputs: Figure 5; ranked gene list with attributions. 
+
+Gate (H4): see Aims. 
+
+P9 Validation and locked test (weeks 16–17) 
+
+Locked GSE113619: axis score per sample (singscore on the top 100 scarring and top 100 scar-free genes, fixed in P4), then the pre-registered interaction test. Opened once. 
+
+Transfer: SSc (4 bulk cohorts plus GSE138669), Asherman (2 bulk cohorts plus GSE215968). 
+
+Specificity: venous ulcer and acute wounds scored relative to their injury score. 
+
+Spatial: axis score per Visium spot in wound, keloid and SSc sections. 
+
+Outputs: Figure 6. Gate (H5): see Aims. 
+
+P10 Biology and robustness (weeks 17–19) 
+
+Transcription-factor activity along the axis and per cell type (decoupleR with CollecTRI). 
+
+Ligand–receptor changes, keloid vs normal scar and fetal vs adult (LIANA). 
+
+Robustness: each dataset left out; arrays only vs RNA-seq only; phase-aligned oral contrasts (skin D7 vs palate D3); sorted-cell datasets removed; alternative meta-analysis estimators. 
+
+Outputs: Figure 7 and supplementary robustness figures. 
+
+P11 Manuscript and release (weeks 19–22) 
+
+Figures, tables and supplement; code on GitHub with a Zenodo DOI; processed objects and the ranked gene list on Zenodo. 
+
+Statistical analysis plan 
+
+All tests, thresholds and multiplicity rules below are fixed in P0. Anything added later is labelled post hoc. 
+
+Effect sizes 
+
+Each gene g in each contrast gets a standardised effect from limma, so arrays and RNA-seq are on one scale: 
+
+d_g = \frac{\hat\beta_g}{\sqrt{\tilde s^2_g}}, \qquad \mathrm{SE}(d_g) = u_g 
+
+Here the estimated coefficient is divided by the moderated (posterior) residual standard deviation, and u is the unscaled standard deviation of the coefficient. Regenerative contrasts use the interaction form: 
+
+\Delta_g = (\text{skin}_{wound} - \text{skin}_{base}) - (\text{scar-free}_{wound} - \text{scar-free}_{base}) 
+
+Axis meta-analysis 
+
+Two-stage random effects: contrasts within a context are pooled first, then contexts are pooled, so large datasets cannot dominate. Each stage uses inverse-variance weights with between-study variance: 
+
+\hat\theta = \frac{\sum_i w_i d_i}{\sum_i w_i}, \qquad w_i = \frac{1}{u_i^2 + \hat\tau^2} 
+
+The between-study variance is estimated by REML with the Hartung–Knapp correction (DerSimonian–Laird as sensitivity). A gene enters the axis if measured in ≥ 3 contexts. Heterogeneity is reported as I², τ² and sign consistency. 
+
+Concordance and permutation 
+
+The H1 statistic is the mean Spearman correlation between the regenerative composite and each fibrotic contrast. Its null comes from 1,000 pairing-aware sample-label permutations (labels swapped within subjects that have both groups, shuffled across the rest): 
+
+p = \frac{1 + \#\{\bar\rho^{*} \ge \bar\rho\}}{B + 1}, \qquad B = 1000 
+
+Multiplicity 
+
+Primary endpoints: fixed sequence. H1 is tested at α = 0.05; the locked test (H5) is tested at α = 0.05 only if H1 passes, so no α splitting is needed. 
+
+Secondary hypotheses (H2–H4): Holm correction across the three. 
+
+Gene level: Benjamini–Hochberg FDR < 0.05 within each analysis. 
+
+Enrichment: FDR < 0.05 within each gene-set collection. 
+
+Models and covariates 
+
+Repeated biopsies: donor as a blocking factor (duplicateCorrelation) or paired design. 
+
+Known batches and chemistry as fixed covariates; sex where recorded and balanced. 
+
+Single-cell: donor-level pseudobulk only (never cells as replicates); a cell type is tested only with ≥ 20 cells in ≥ 3 donors per group. 
+
+Keloid results are pooled across the three datasets by random-effects meta-analysis. 
+
+Power 
+
+Locked test: before opening GSE113619, simulate its power from the variance of sample-level scores in comparable wound datasets and record it in the frozen plan. 
+
+Single-cell: 3 vs 3 donors detects only large effects, so claims rest on replication across datasets, not single p-values. 
+
+Sensitivity analyses (pre-specified) 
+
+Leave each dataset out; DerSimonian–Laird instead of REML; arrays only vs RNA-seq only; injury-adjusted axis; flipped GSE151464 included; sorted-cell datasets removed; phase-aligned oral contrasts (skin D7 vs palate D3); alternative gene-set sizes for the locked-test score (50, 100, 200). 
+
+Graph-learning design 
+
+The model must predict how genes it has never been told about behave in a context it has never seen. It gets credit only for what the network adds beyond gene features and node degree. 
+
+Task. Node regression: predict each gene’s axis effect (primary); classify consensus scarring vs scar-free genes (secondary). 
+
+Splits (leakage-proof). Leave one context out × 5 gene folds. For held-out context c, labels are recomputed from the other contexts only. Test genes have their labels hidden. Predictions are scored against the observed effects in context c for the test genes. 
+
+Inputs. Graphs from P7 (STRING curated + healthy-skin co-expression, as separate and combined graphs). Node features that never use the contrasts: cell-type expression profiles from healthy single-cell references (skin, oral, endometrium; about 40 values), GO-slim membership, transcription-factor, ligand and receptor flags. Training-gene labels are passed as an input channel (label trick) so propagation is possible. 
+
+Model family 
+
+Models 
+
+What it tests 
+
+Graph neural networks 
+
+GCN, GraphSAGE, GAT, GIN 
+
+Does neighbourhood information help? 
+
+Features only 
+
+Ridge, XGBoost, MLP 
+
+How far features go without a graph 
+
+Propagation baselines 
+
+Random walk with restart, heat diffusion, label propagation 
+
+Is a learned model needed, or does simple propagation suffice? 
+
+Network controls 
+
+Best GNN on 100 degree-preserving rewired graphs 
+
+Is the gain from biology or from degree? 
+
+Metrics. Spearman ρ between predicted and observed held-out effects; AUPRC for the top decile. Every metric is reported within node-degree quartiles, because hub genes inflate naive scores. 
+
+Implementation. R torch (CPU), with GCN, GraphSAGE, GAT and GIN layers written as sparse matrix operations. Hyperparameters by inner cross-validation; 5 seeds per setting; early stopping on validation genes. 
+
+Output. A final ensemble trained on all contexts ranks every gene. Network-supported candidates are genes the model ranks highly that are not significant in the meta-analysis alone. Each candidate is annotated with its integrated-gradient feature attributions, cell-type localisation (P5) and spatial pattern (P9). 
+
+Tools and software 
+
+Everything runs in R 4.5 in RStudio; packages come from CRAN and Bioconductor unless marked GitHub, and exact versions are locked with renv in P0. 
+
+Task 
+
+Packages 
+
+Purpose 
+
+Phase 
+
+Environment and reporting 
+
+renv, BiocManager, yaml, openxlsx, ggplot2, patchwork, ComplexHeatmap, ggrepel 
+
+Reproducible library; config; tables; publication figures (PDF + TIFF) 
+
+All 
+
+Data access 
+
+GEOquery, curl, jsonlite, R.utils, tools (md5sum) 
+
+GEO and ArrayExpress/BioStudies downloads, manifests, checksums 
+
+P1 
+
+Microarray preprocessing 
+
+affy, oligo, affyPLM, limma (neqc, read.maimages) 
+
+RMA from CEL; NUSE/RLE QC; Illumina and Agilent normalisation 
+
+P2 
+
+RNA-seq preprocessing 
+
+edgeR, limma (voom) 
+
+Filtering, TMM, precision weights 
+
+P2 
+
+Annotation 
+
+AnnotationDbi, org.Hs.eg.db, GO.db, msigdbr 
+
+Gene mapping; gene sets 
+
+P2, P4 
+
+Differential expression 
+
+limma 
+
+Contrasts, interaction models, duplicateCorrelation 
+
+P3, P5 
+
+Meta-analysis 
+
+metafor 
+
+Two-stage random effects (REML, Hartung–Knapp, DerSimonian–Laird) 
+
+P4 
+
+Enrichment 
+
+fgsea, limma (cameraPR) 
+
+GSEA and programme tests 
+
+P4 
+
+Single-cell import and QC 
+
+Matrix, rhdf5, DropletUtils, scuttle, scDblFinder, SingleCellExperiment 
+
+Reading formats; cell calling; QC; doublets 
+
+P5 
+
+Single-cell analysis 
+
+scran, Seurat, harmony, UCell 
+
+Normalisation, clustering, integration, marker-module cell typing 
+
+P5 
+
+Pseudobulk 
+
+scuttle (aggregateAcrossCells), edgeR, limma 
+
+Donor × cell-type contrasts 
+
+P5 
+
+Deconvolution 
+
+InstaPrism (GitHub), nnls 
+
+Cell fractions of bulk samples; fallback method 
+
+P6 
+
+Networks 
+
+igraph, STRINGdb 
+
+Graph building, degree-preserving rewiring, network proximity 
+
+P7 
+
+Graph learning 
+
+torch, luz, glmnet, xgboost 
+
+GCN, GraphSAGE, GAT, GIN layers; training loops; feature-only baselines 
+
+P8 
+
+Propagation baselines 
+
+Matrix, igraph 
+
+Random walk with restart, heat diffusion, label propagation 
+
+P8 
+
+Regulators and communication 
+
+decoupleR, liana (GitHub), OmnipathR 
+
+TF activity; ligand–receptor inference 
+
+P10 
+
+Validation scoring 
+
+singscore, GSVA, pROC 
+
+Sample-level axis scores; AUC 
+
+P9 
+
+Spatial 
+
+Seurat (Visium loaders), SpatialExperiment 
+
+Spot-level axis scores 
+
+P9 
+
+Hardware: one Windows 10 workstation, 32 GB RAM, 8 logical cores, 76 GB free disk. Graph learning runs on CPU (about 15,000 genes); no GPU or cluster is required. 
+
+Expected outcomes and deliverables 
+
+Deliverable 
+
+What it contains 
+
+Phase 
+
+Harmonised data resource 
+
+Raw-file-derived objects for 31 bulk and 12 single-cell datasets, with QC flags and curated sample sheets 
+
+P2, P5 
+
+Repair-Outcome Axis table 
+
+Per-gene estimate, SE, FDR, heterogeneity, sign consistency, raw and composition-adjusted versions 
+
+P4, P6 
+
+Decomposition result 
+
+Share of the axis explained by injury, composition and cell state, per gene and per programme 
+
+P6 
+
+Cell-state atlas of the axis 
+
+Per-cell-type effects for keloid (3 datasets), SSc, Asherman, wound time course and fetal vs adult 
+
+P5 
+
+Graph-learning benchmark 
+
+Held-out performance by model and degree stratum, with rewired-network nulls 
+
+P8 
+
+Prioritised gene list 
+
+Ranked genes with network support, attributions, cell localisation and spatial pattern 
+
+P8–P10 
+
+Locked-test result 
+
+Pre-registered interaction test and score distributions in GSE113619 
+
+P9 
+
+Sample-level axis score 
+
+Frozen gene set and scoring code for new cohorts 
+
+P9 
+
+Manuscript, code and data release 
+
+Seven main figures, supplement, GitHub code with Zenodo DOI 
+
+P11 
+
+Expected biological result, if H1–H3 hold: scarring repair shows a larger immune–inflammatory response concentrated in myeloid and T cells, plus a cell-intrinsic residual in fibroblasts that runs opposite in fetal skin. 
+
+Manuscript 
+
+Working title: Scar-free human repair is marked by an attenuated immune programme: cross-context meta-analysis, single-cell decomposition and graph learning. Seven main figures, each produced by one phase. 
+
+Figure 
+
+Content 
+
+Phase 
+
+1 
+
+Study design: contexts, datasets, roles, sample numbers 
+
+P0–P2 
+
+2 
+
+The Repair-Outcome Axis: concordance, permutation null, leave-one-context-out stability 
+
+P4 
+
+3 
+
+What the axis is made of: programmes, injury share, restricted concordance 
+
+P4 
+
+4 
+
+Cell states: per-cell-type contrasts, keloid replication, fetal vs adult 
+
+P5 
+
+5 
+
+Composition vs cell state, and the graph-learning benchmark by degree stratum 
+
+P6, P8 
+
+6 
+
+Validation: locked test, SSc and Asherman transfer, specificity, spatial maps 
+
+P9 
+
+7 
+
+Prioritised genes and regulators: network modules, TF activity, cell localisation 
+
+P8, P10 
+
+Target journals (impact factor roughly 3–4, approximate; check current values before submission): Wound Repair and Regeneration, Frontiers in Genetics, BMC Genomics, Scientific Reports. 
+
+Risks and pre-specified fallbacks 
+
+Every failure mode has a fallback that still yields a publishable result, so no single gate can sink the paper. 
+
+Risk 
+
+Early signal 
+
+Fallback 
+
+A raw file is missing or corrupt 
+
+P1 manifest 
+
+NCBI uniform or submitter raw counts; drop the dataset only if neither exists, and report it 
+
+A dataset fails QC or its positive control 
+
+P2 gate 
+
+Pre-specified exclusion with the flipped or full version as sensitivity 
+
+Concordance weakens after reprocessing 
+
+P4 permutation p ≥ 0.05 
+
+Report effect sizes with CIs; reframe as context-specific programmes shared by subsets of contexts 
+
+Deconvolution is unreliable 
+
+Simulation r < 0.8 
+
+Marker-score covariates for the main lineages instead of fractions 
+
+Own cell typing disagrees with authors 
+
+Agreement < 80% 
+
+Use author labels where available; restrict to 8 coarse lineages 
+
+Graph model does not beat baselines 
+
+P8 gate 
+
+Report as a degree-controlled benchmark (a finding in itself); rank genes with the best baseline 
+
+Networks show no axis structure 
+
+Proximity z ≤ 2 
+
+Keep the benchmark; drop network-module claims 
+
+Locked test is null 
+
+P9 
+
+Report it as pre-registered; discuss the shallow libraries (0.12–0.68 M reads) with a power estimate made in P0 
+
+Memory limits (32 GB) 
+
+P5 
+
+Per-sample processing; on-disk matrices (BPCells or HDF5Array) 
+
+Leakage between labels and inputs 
+
+Design review in P0 
+
+Labels recomputed per held-out context; networks built without expression or text-mining evidence 
+
+Ethics, data availability and reproducibility 
+
+Ethics. Only public, de-identified data collected under the original studies’ consent and approvals are used; no new human material is collected. Confirm with the institutional ethics office whether a formal exemption letter is needed. Controlled-access data are not used, and no re-identification is attempted. 
+
+Attribution. Every dataset is cited by accession and original publication. 
+
+Data availability. Processed objects, the axis table, the frozen gene set and the ranked gene list are deposited on Zenodo; all accessions are listed in the supplement. 
+
+Code availability. One script per phase on GitHub, archived with a Zenodo DOI at submission. 
+
+Reproducibility. renv lockfile, fixed seeds, config.yaml, download manifests with MD5, sessionInfo per phase, and the frozen plan tagged before download. 
+
+Reporting. Dataset selection follows a PRISMA-style flow; the locked-test analysis is reported against its pre-registered specification. 
+
+Computing setup and project structure 
+
+Everything runs in R 4.5 in RStudio on the Windows workstation (32 GB RAM, 8 cores, 76 GB free disk). v2 starts in a new folder, so no pre-analysis output can leak in. 
+
+fibrosis_v2/ 
+  00_config/      config.yaml, dataset registry, renv.lock, frozen plan 
+  01_raw/         bulk/ and singlecell/ raw downloads + manifest.csv (MD5) 
+  02_processed/   one frozen object per dataset (bulk) or per sample (single-cell) 
+  03_contrasts/   P3 effect sizes 
+  04_axis/        P4 axis, programmes, permutations 
+  05_singlecell/  P5 QC, cell types, pseudobulk, contrasts 
+  06_composition/ P6 references, fractions, adjusted axis 
+  07_networks/    P7 graphs and rewired nulls 
+  08_gnn/         P8 splits, models, predictions 
+  09_validation/  P9 locked test, transfer, spatial 
+  10_biology/     P10 TF activity, ligand-receptor, robustness 
+  scripts/        P00 ... P11, one script per phase 
+  figures/  tables/  logs/ 
+
+The full package list, by task, is in Tools and software. 
+
+Sources 
+
+Bayat A, McGrouther DA, Ferguson MWJ. Skin scarring. BMJ 2003 
+
+Wynn TA. Cellular and molecular mechanisms of fibrosis. J Pathol 2008 
+
+Fetal wound healing. Textbook on Scar Management, NCBI Bookshelf 
+
+Iglesias-Bartolome R et al. Transcriptional signature primes human oral mucosa for rapid wound healing. Sci Transl Med 2018 
+
+Deng CC et al. Single-cell RNA-seq reveals fibroblast heterogeneity and increased mesenchymal fibroblasts in human fibrotic skin diseases. Nat Commun 2021 
+
+Schulte-Sasse R et al. Integration of multiomics data with graph convolutional networks to identify new cancer genes. Nat Mach Intell 2021 
+
+Datasets: every accession in the dataset tables resolves at NCBI GEO or ArrayExpress. 
