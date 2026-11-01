@@ -1,11 +1,11 @@
-# P0 gate — status before release
+# P0 gate — preregistration frozen; software lock incomplete
 
 - **Frozen source plan:** `00_config/frozen_work_plan_v2.txt`
 - **SHA-256:** `0ab133f9b828207e50dbff1ab2b14f599bed170b39122c0d046a4a898e9480bd`
-- **Registry:** 32 bulk, 12 single-cell, 2 spatial, 1 intervention entries; counts match the plan tables.
-- **Accession validation:** 47 of 47 GEO and ArrayExpress accessions resolved in `accession_validation.tsv`.
+- **Registry:** 32 bulk, 12 single-cell, 2 spatial, and 1 intervention entry; counts match the plan tables.
+- **Accession validation:** 47 of 47 GEO/ArrayExpress accessions resolved in `accession_validation.tsv`.
 - **Locked cohort:** GSE113619 was checked by HTTP headers only. No metadata or data contents were read.
-- **Git:** project-local repository root and `origin` are configured. `.gitignore` excludes raw data and large binary formats.
-- **Release:** local P0 commit and dated tag are being prepared. P1 downloads start only after the timestamped tag is published to the connected repository.
+- **Git freeze:** original commit `c942919` was published as `p0-plan-v2-20261101`. The expanded config and contrast table are being recorded as a follow-up setup revision.
+- **R environment:** R 4.5.1. `renv.lock` pins renv 1.3.1; `package_plan.csv` lists all study packages, but their versions are not yet resolved/pinned.
 
-**Approval status:** awaiting owner approval of this P0 record before P1.
+The dataset registry and preregistered contrasts/thresholds are recorded. P0 remains **incomplete** until all analysis-package versions are pinned in renv. Do not begin P2 before that lock is completed and the owner approves the P0 gate. P1 acquisition is underway under the owner's direct request to complete steps 1 and 2.

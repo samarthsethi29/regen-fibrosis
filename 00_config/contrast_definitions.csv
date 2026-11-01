@@ -1,0 +1,20 @@
+contrast_id,accessions,context,role,contrast_definition,sign
+R1a,GSE209609,oral mucosal repair,training,"(skin wound - skin 0h) - (palate wound - palate 0h); 6h,D1,D3,D7",positive_towards_scarring
+R1b,GSE97615,oral mucosal repair,training,"(skin D3/D6 - skin D0) - (oral D3/D6 - oral D0)",positive_towards_scarring
+R1c,GSE111523,oral mucosal repair,training,"skin wound response (GSE28914) - gingival healing response; confirm in P1",positive_towards_scarring
+R2,GSE168760,scar-free adult skin,training,"donor-site wound response - fractional-laser response, D3-D21",positive_towards_scarring
+F1a,GSE124161,adult scar formation,training,"placebo wound W1-W8 vs uninjured D0",positive_towards_scarring
+F1b,GSE152781,adult scar formation,training,"placebo/untreated W4/W8 vs uninjured D0",positive_towards_scarring
+F2a,GSE178411,hypertrophic scar,training,"hypertrophic scar vs normal skin",positive_towards_scarring
+F2b,GSE181540,hypertrophic scar,training,"hypertrophic scar vs normal skin",positive_towards_scarring
+F3a,GSE218007,keloid,training,"keloid vs normal skin",positive_towards_scarring
+F3b,GSE158395,keloid,training,"keloid vs normal skin",positive_towards_scarring
+F3c,GSE212954,keloid,training,"keloid centre+margin vs paired normal skin",positive_towards_scarring
+F3d,GSE92566,keloid,training,"keloid vs paired non-lesional skin",positive_towards_scarring
+INJ1,GSE28914,injury reference,reference,"donor-site wound D3/D7 vs intact skin",towards_injury
+INJ2,GSE50425,injury reference,reference,"donor-site wound D14/D21 vs intact skin",towards_injury
+LT,GSE113619,locked test,locked_validation,"(keloid-prone D42-D0) - (healthy D42-D0)",positive_towards_scarring
+E1,GSE130955;GSE58095;GSE181549;GSE95065,systemic sclerosis,validation,"SSc vs control skin",positive_towards_fibrosis
+E2,GSE224093;GSE165321,endometrial fibrosis,validation,"intrauterine adhesion vs control",positive_towards_fibrosis
+SPEC1,GSE174661,venous ulcer and acute wound,specificity,"venous ulcer/acute wound vs intact skin, relative to injury score",towards_injury
+SPEC2,GSE178411,early/late wound,specificity,"early/late wound vs normal skin, relative to injury score",towards_injury

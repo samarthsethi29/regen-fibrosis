@@ -1,16 +1,91 @@
 project: Human Repair-Outcome Axis
 plan: Human Repair-Outcome Axis — Work Plan v2
-fixed_seed: 2026
+plan_date: 2026-09-27
 frozen_plan: 00_config/frozen_work_plan_v2.txt
 plan_sha256_file: 00_config/frozen_work_plan_v2.sha256
 registry: 00_config/dataset_registry.csv
-locked_test: GSE113619
-locked_test_policy: Download and checksum in P1; do not inspect contents until P9 after axis gene set is frozen and hashed.
-phases:
-  P0: Setup and preregistration
-  P1: Raw-file download
-thresholds:
-  H1_mean_spearman_rho: '> 0'
-  H1_permutation_p: '< 0.05'
-  H1_leave_one_context_out_rho: '>= 0.80'
-  P1_core_files: '100% present and checksummed'
+renv_lock: renv.lock
+package_plan: 00_config/package_plan.csv
+contrasts: 00_config/contrast_definitions.csv
+fixed_seed: 2026
+analysis_language: R
+r_version: 4.5.1
+sign_convention: positive_effect_towards_scarring
+locked_test:
+  accession: GSE113619
+  download_checksum_phase: P1
+  open_phase: P9
+  access_policy: Do not inspect file contents or metadata before P9; checksum only in P1.
+statistics:
+  alpha: 0.05
+  permutations: 1000
+  gene_fdr: 0.05
+  enrichment_fdr: 0.05
+  primary_test_sequence: [H1, H5]
+  secondary_adjustment: Holm across [H2, H3, H4]
+  gene_axis_min_contexts: 3
+  min_genes_measured: 12000
+  min_training_contrast_fraction: 0.70
+H1:
+  statistic: mean Spearman correlation between regenerative composite and each fibrotic contrast
+  success:
+    mean_rho: '> 0'
+    pairing_aware_permutation_p: '< 0.05'
+    leave_one_context_out_rho: '>= 0.80'
+H2:
+  test: concordance after removing top 10% acute-injury genes and after adjusting all contrasts for deconvolved cell fractions
+  success: '>= 50% concordance retained and below random-removal null'
+H3:
+  unit: donor-by-cell-type pseudobulk
+  minimum_cells_per_donor_celltype: 20
+  minimum_donors_per_group: 3
+  cell_typing_agreement: '>= 80%'
+  success: 'at least one cell type significant in >= 2 keloid datasets and shifted oppositely in fetal vs adult skin'
+H4:
+  split: leave-one-context-out x five gene folds
+  degree_strata: quartiles
+  rewired_network_copies: 100
+  success: 'beats best baseline in >= 60% of held-out contexts and exceeds 95% of rewired-network performance'
+H5:
+  cohort: GSE113619
+  score: singscore using top 100 scarring and top 100 scar-free genes frozen in P4
+  test: one-sided interaction (keloid-prone vs healthy, day 42 minus day 0)
+  success:
+    locked_test_p: '< 0.05'
+    pooled_ssc_auc: '> 0.65'
+P0:
+  registry_accessions_resolve: all
+  plan_release: timestamped GitHub tag before data downloads
+P1:
+  core_files_present: 1.0
+  core_files_checksummed: 1.0
+  manifest_fields: [URL, size, MD5, date]
+P2:
+  sample_pass_fraction: '>= 0.90'
+  fibrotic_positive_control_expected_direction_fraction: '>= 0.80'
+P3:
+  genes_measured: '>= 12000 in >= 70% of training contrasts'
+P4:
+  meta_analysis: two_stage_random_effects_REML_Hartung_Knapp
+  sensitivity_estimator: DerSimonian_Laird
+  permutation_replicates: 1000
+P5:
+  pseudobulk_only: true
+P6:
+  deconvolution_simulated_pseudobulk_pearson_r: '>= 0.80 per major lineage'
+P7:
+  string_version: '12.0'
+  string_channels: [experiments, curated_database]
+  string_combined_score_min: 700
+  exclude_string_channels: [coexpression, text_mining]
+  healthy_skin_coexpression_neighbors_per_gene: 10
+  degree_preserving_rewired_copies: 100
+  network_proximity_z_gate: '> 2'
+P8:
+  cpu_only: true
+  seeds_per_setting: 5
+P9:
+  locked_test_open_once: true
+  locked_test_open_after_axis_frozen: true
+P10: {}
+P11: {}

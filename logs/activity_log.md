@@ -23,3 +23,21 @@
 - **Batch-query correction:** the initial NCBI batch query was not a per-accession check and is superseded by the individual validation above.
 - **P0 release:** pending local commit/tag and owner approval to publish the tag.
 - **P1:** not started; no data files downloaded in this project folder.
+
+## 2026-11-01 — P1 GEO acquisition in progress
+
+- **Plan release:** published tag `p0-plan-v2-20261101` to the connected GitHub origin. The tag points to the P0 plan snapshot, configuration, registry, individual accession checks and `.gitignore`; it does not contain raw data.
+- **GEO source selection:** `scripts/p1_geo_download.py` writes `01_raw/download_manifest.csv` and `01_raw/geo_supplementary_index.csv`. Selected only raw archives/count tables and the required author metadata; excluded differential-result tables, normalized locked-test data and processed Seurat/h5ad objects where the plan specifies raw/per-sample inputs.
+- **File listing:** the current raw selection is listed at about 11.18 GiB. This estimate excludes GSE312129: its only GEO archive is listed as 54 GiB, which exceeds the currently available disk space (about 41 GiB at the time checked) and conflicts with the plan's ~10 GiB single-cell estimate. It is marked pending; no data from it were downloaded.
+- **Successful acquisitions recorded in manifest:** GSE209609 raw CEL tar, GSE50425 raw tar, GSE168760 raw tar, GSE124161 read-count table, GSE178411 count table, GSE162904 raw tar, GSE158766 raw tar and GSE218007 raw tar. Each is checksummed with MD5 and SHA-256 after completion. GSE209609 tar listing confirms CEL files; archive was not extracted.
+- **Transfer behavior:** direct curl transfers failed or returned 403 for larger files. Resumable wget succeeded for several. Failed/partial files and retry status are recorded in the manifest; zero-byte files are not treated as acquired.
+- **Locked cohort:** GSE113619 raw-count file is selected for checksum-only acquisition; no data contents have been read. Its transfer status remains whatever is recorded in the live manifest.
+- **Still outstanding:** ArrayExpress raw files, plan reference resources (including STRING v12), and fallback resolution for GEO accessions without suitable supplementary raw/count files. No archive extraction, preprocessing, EDA, or modeling has been done.
+- **P1 gate:** pending until all required core files are present and checksummed and owner reviews any exclusions/fallbacks.
+
+## 2026-11-01 — P0 environment lock follow-up
+
+- The local R installation is 4.5.1. Installed renv 1.3.1 in the project library and created `renv.lock` with the R and renv versions.
+- Expanded `config.yaml` to record H1-H5, phase gates, thresholds, direction, locked-test handling and network constraints; added `contrast_definitions.csv` and `package_plan.csv`.
+- **P0 limitation:** the renv lock currently pins only renv itself; exact versions of the analysis packages remain unresolved. P0 is therefore not fully compliant yet. P2 is held until package versions are pinned and the owner approves.
+- The expanded setup revision is not yet committed/tagged; the original timestamped plan tag remains unchanged.

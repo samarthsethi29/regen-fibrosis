@@ -15,3 +15,9 @@
 *.parquet
 .ipynb_checkpoints/
 .DS_Store
+.Renviron
+renv/library/
+renv/cache/
+renv/cache-root/
+renv/sandbox/
+renv/staging/
